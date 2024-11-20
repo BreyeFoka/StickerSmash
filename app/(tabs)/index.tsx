@@ -1,33 +1,32 @@
-import { Text, View, StyleSheet } from "react-native";
-import { Image } from "expo-image";
+import { View, StyleSheet } from 'react-native';
+ import { Image } from 'expo-image'; 
 
-const placeholder = require("../../assets/images/background-image.png")
+
+const PlaceholderImage = require('@/assets/images/background-image.png');
+
+
 export default function Index() {
   return (
-    <View
-      style={styles.container}
-    >
-      <Text style={styles.text}>Edit app/index.tsx to edit this screen.</Text>
+    <View style={styles.container}>
+      <View style={styles.imageContainer}>
+        <Image source={PlaceholderImage} style={styles.image} />
+      </View>
     </View>
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#25292e',
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  text:{
-    color: '#fff',
+  imageContainer: {
+    flex: 1,
   },
-  link: {
-    color: 'red',
-    fontSize: 15, 
-    fontWeight: 'heavy',
-    fontStyle: 'italic',
-    
-  }
+  image: {
+    width: 320,
+    height: 440,
+    borderRadius: 18,
+  },
 });
