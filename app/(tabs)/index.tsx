@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 import * as ImagePicker from 'expo-image-picker';
 import { useState, useRef } from 'react';
@@ -7,6 +7,7 @@ import Button from '../components/button';
 import ImageViewer from '../components/ImageViewer';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { captureRef } from 'react-native-view-shot';
+import domtoimage from 'dom-to-image';
 import IconButton from '../components/IconButton';
 import CircleButton from '../components/CircleButton';
 import EmojiPicker from '../components/EmojiPicker';
@@ -52,6 +53,8 @@ export default function Index() {
   };
 
   const onSaveImageAsync = async () => {
+    if(Platform.OS !== 'web'
+    ){
    try{
     const localUri =await captureRef(imageRef,{height: 440, quality:1,});
     await MediaLibrary.saveToLibraryAsync(localUri);
@@ -59,7 +62,21 @@ export default function Index() {
       alert("Saved");
     }
    }catch (e){
-    console.log(e)
+    console.log(e);
+   }} else{
+    try{
+      const dataUrl = await domtoimage.toJpeg(imageRef.current, {
+        quality: 0.95,
+        width: 320,
+        height: 440,
+      });
+      let link =document.createElement('a');
+      link.download = 'sticker-smash.jpeg';
+      link.href = dataUrl;
+      link.click();
+    }catch (e){
+      console.log(e)
+    }
    }
   };
 
